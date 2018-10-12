@@ -1,6 +1,7 @@
 # 配置中心应该注释到服务发现中，这样其它服务才能获取到它的配置
 server:
   port: 6200
+management.port: 6201
 spring:
   application:
     name: configServer
