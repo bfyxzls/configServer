@@ -1,0 +1,22 @@
+# 配置中心应该注释到服务发现中，这样其它服务才能获取到它的配置
+server:
+  port: 6200
+spring:
+  application:
+    name: configServer
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/bfyxzls/lindconfig.repo.git/
+          search-paths: config-repo
+          username: bfyxzls@sina.com
+          password: gemini123
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:6761/eureka/
+
