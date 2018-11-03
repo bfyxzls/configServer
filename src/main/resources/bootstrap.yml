@@ -1,21 +1,32 @@
 # 配置中心应该注释到服务发现中，这样其它服务才能获取到它的配置
-server:
-  port: 6200
-management:
-  port: 6201
+server.port: 8888
+management.port: 8889
 spring:
-  application:
-    name: configServer
+  application.name: pilipa-configserver
+  profiles.active: dev
+
+---
+spring:
+  profiles: devops
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/bfyxzls/lindconfig.repo.git/
-          search-paths: config-repo
-          username: bfyxzls@sina.com
-          password: gemini123
-
+          uri: /config_repo
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:6761/eureka/
+      defaultZone: http://eurekaserver:8761/eureka/
+
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      server:
+        git:
+          uri: /config_repo
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
