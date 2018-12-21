@@ -1,32 +1,31 @@
 # 配置中心应该注释到服务发现中，这样其它服务才能获取到它的配置
-server.port: 8888
-management.port: 8889
+server.port: ${PORT:8888}
+management.port: ${BG_PORT:8889}
 spring:
   application.name: pilipa-configserver
-  profiles.active: dev
+  profiles.active: development
+
+encrypt:
+  key-store:
+    location: file:///Users/lind.zhang/github/dockerDeploy/swarm/server.jks
+    password: changeit
+    alias: config-server-key
+    secret: changeit
 
 ---
 spring:
-  profiles: devops
+  profiles: svt
   cloud:
     config:
       server:
         git:
           uri: /config_repo
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://eurekaserver:8761/eureka/
 
 ---
 spring:
-  profiles: dev
+  profiles: development
   cloud:
     config:
       server:
         git:
           uri: /config_repo
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
