@@ -35,7 +35,7 @@ keytool -genkeypair -alias config-server-key -keyalg RSA -dname "CN=Config Serve
 ### 测试
 我们继续使用 encrypt API加密一项测试数据
 ```
-curl http://localhost:8888/encrypt -d 23456789
+curl http://localhost:8888/encrypt -d lind123
 ```
 返回加密后的字符：
 ```
@@ -47,36 +47,27 @@ curl http://localhost:8888/decrypt -d AQAPWOUOh4+bgtKc5E0d5Aba8VUKnzEXh27HyKSAbW
 ```
 会返回
 ```
-23456789
+lind123
 ```
 ### 应用到项目
+添加依赖
 ```
-// bootstrap.yml内容
+implementation('org.springframework.security:spring-security-rsa')
+
+```
+bootstrap.yml内容
+```
 user:
   password: '{cipher}AQAPWOUOh4WVexGgVv+bgtKc5E0d5Aba8VUKnzEXh27HyKSAbW+wyzDwZTbk5QYfXpoCAs413rdeNIdR2ez44nkjT5V+438/VQExySzjZPhP0xYXi9YIaJqA3+Ji+IWK8hrGtJ4dzxIkmItiimCOirLdZzZGDm/yklMUVh7lARSNuMxXGKlpdBPKYWdqHm57ob6Sb0ivm4H4mL1n4d3QUCuE7hh2F4Aw4oln7XueyMkRPTtPy8OpnBEEZhRfmaL/auVZquLU5jjMNJk9JiWOy+DSTscViY/MZ+dypv6F4AfDdVvog89sNmPzcUT+zmB8jXHdjLoKy+63RG326WffY9OPuImW6/kCWZHV6Vws55hHqRy713W6yDBlrQ/gYC3Wils='
 ```
-访问：http://localhost:8888/web-client/default
+访问：http://localhost:8888/service1/svt
 
 返回内容已经解密了
 ```
 {
-    "name": "web-client",
-    "profiles": [
-        "default"
-    ],
-    "label": null,
-    "version": "3044a5345fb86d09a043ca7404b9e57c8c13c512",
-    "state": null,
-    "propertySources": [
-        {
-            "name": "https://gitee.com/zxuqian/spring-cloud-config-remote/web-client.yml",
-            "source": {
-                "message": "此条消息来自于远程配置仓库",
-                "management.endpoints.web.exposure.include": "*",
-                "user.password": "23456789"
-            }
-        }
-    ]
+
+ "user.password": "23456789"
+
 }
 
 ```
