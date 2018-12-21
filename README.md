@@ -15,10 +15,11 @@ keytool -genkeypair -alias config-server-key -keyalg RSA -dname "CN=Config Serve
 - keypass 为key的密码
 - keystore 为keystore的文件名
 - storepass 访问keystore的密码
-> 上述工具将产生的 privte key 保存在了名为server.jks的 key store 中。到目前为止，我们只产生了 private key，Spring Cloud Config Server 会根据我们提供的 key 的信息，每次会用程序生成一个 public key，参考如下源代码org.springframework.security.rsa.crypto.KeyStoreKeyFactory：
 
+> 上述工具将产生的 privte key 保存在了名为server.jks的 key store 中。到目前为止，我们只产生了 private key，Spring Cloud Config Server 会根据我们提供的 key 的信息，每次会用程序生成一个 public key，参考如下源代码org.springframework.security.rsa.crypto.KeyStoreKeyFactory：
  这里使用了 Java Security API 来对key进行操作。参见注释。然后上边的信息通过 configserver 中的 bootstrap.xml 配置文件提供：
- ```
+
+```
  encrypt:
   #key: Thisismysecretkey
   key-store:
@@ -27,11 +28,13 @@ keytool -genkeypair -alias config-server-key -keyalg RSA -dname "CN=Config Serve
     alias: config-server-key
     secret: changeit
 ```
+
 因为我们不能同时使用对称加密和非对称加密，所以我们把 `encrypt.key` 配置注释掉，然后指定非对称加密的参数：
 - location： Keystore 的文件路径
 - password： keystore 的密码
 - alias： key 的别名
 - secret： key的密码
+
 ### 测试
 我们继续使用 encrypt API加密一项测试数据
 ```
@@ -49,6 +52,7 @@ curl http://localhost:8888/decrypt -d AQAPWOUOh4+bgtKc5E0d5Aba8VUKnzEXh27HyKSAbW
 ```
 lind123
 ```
+
 ### 应用到项目
 添加依赖
 ```
