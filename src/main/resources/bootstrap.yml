@@ -2,7 +2,7 @@
 server.port: ${PORT:8888}
 management.port: ${BG_PORT:8889}
 spring:
-  application.name: pilipa-configserver
+  application.name: lind-configserver
   profiles.active: development
 
 encrypt:
