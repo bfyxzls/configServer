@@ -19,11 +19,11 @@ keytool -genkeypair -alias config-server-key -keyalg RSA -dname "CN=Config Serve
 > 上述工具将产生的 privte key 保存在了名为server.jks的 key store 中。到目前为止，我们只产生了 private key，Spring Cloud Config Server 会根据我们提供的 key 的信息，每次会用程序生成一个 public key，参考如下源代码org.springframework.security.rsa.crypto.KeyStoreKeyFactory：
  这里使用了 Java Security API 来对key进行操作。参见注释。然后上边的信息通过 configserver 中的 bootstrap.xml 配置文件提供：
 
-```
+```yml
  encrypt:
   #key: Thisismysecretkey
   key-store:
-    location: file://${user.home}/development/keys/server.jks
+    location: file:///development/keys/server.jks #注意这个的文件必须是file:///开头的
     password: changeit
     alias: config-server-key
     secret: changeit
