@@ -8,7 +8,7 @@ spring:
 encrypt:
     #key: Thisismysecretkey
     key-store:
-      location: file:///c:/server.jks #这里由于在docker里运行，所以用的是从docker-compose里传来的环境变量
+      location: file:///config-encrypt/server.jks #这里由于在docker里运行，所以用的是从docker-compose里传来的环境变量
       password: ${ENCRYPT_PASSWORD:changeit}
       alias: ${ENCRYPT_ALIAS:config-server-key}
       secret: ${ENCRYPT_SECRET:changeit}
